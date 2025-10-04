@@ -2,6 +2,7 @@ import numpy as np
 import nrrd
 import vtk
 from vtk.util.numpy_support import numpy_to_vtk
+import pprint
 
 
 def main(user_input):
@@ -17,15 +18,27 @@ def main(user_input):
     1. nrrd読み込み
     """
     data, header = nrrd.read(input_path)
-    print("NRRD shape:", data.shape)
+    pprint.pprint(header)
 
     ## nrrdファイル内でspacingとoriginが定義されている場合は取得する。取得できない場合は第2引数の初期値を採用する
-    spacings = header.get('spacings', [1.0,1.0,1.0])
-    origin = header.get('space origin', [0.0,0.0,0.0])
+    origin = header.get('space origin', [0.0, 0.0, 0.0])    # 原点位置
+    space_dirs = np.array(header.get('space directions', [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]))  # 物理空間における向き、間隔情報
+
+    valid_axes = [i for i, s in enumerate(space_dirs) if not np.isnan(s).any()]
+    spacings = np.linalg.norm(space_dirs[valid_axes], axis=1)
 
     # nrrdの座標系情報
     ## 基本的には left-posterior-superior を想定する
     space = header.get('space', 'unknown')
+
+    print("=====================================================")
+    print("spacings:")
+    print(spacings)
+    print("=====================================================")
+    print("space origin:")
+    print(origin)
+    print("=====================================================")
+    print(f"space: {space}")
 
     """
     2. nrrdの座標系をvtkに合わせる
