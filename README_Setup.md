@@ -17,6 +17,28 @@ $ source .venv/Scripts/activate
 $ pip install matplotlib numpy pandas pynrrd scipy slicer vtk
 ```
 
+* `.nrrd`ファイルを`converter`フォルダ直下に配置する
+
+```
+vti_image_viewer
+    |
+    `--- converter
+    |       |
+    |       `--- *.nrrd
+    |       |
+    |       `--- *.vti
+    |       |
+    |       `--- convert.py
+    |       |
+    |       `--- viewer.py
+    |
+    `--- viewer
+    |
+    `--- README_Setup.md
+    |
+    `--- README.md
+```
+
 ---
 
 ## React
