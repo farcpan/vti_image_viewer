@@ -23,7 +23,7 @@ export const VolumeViewer: React.FC = () => {
         // full screen render window
         const fullScreenRenderWindow = vtkFullScreenRenderWindow.newInstance({
             container: containerRef.current,
-            background: [0.1, 0.1, 0.3],  // background color of window
+            background: [0.8, 0.8, 0.9],  // background color of window
         });
         const renderer = fullScreenRenderWindow.getRenderer();
         const renderWindow = fullScreenRenderWindow.getRenderWindow();
